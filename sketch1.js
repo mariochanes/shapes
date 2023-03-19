@@ -1,6 +1,7 @@
 let seed = 0;
 let currentPattern = 2;
 let song;
+let isMobile = false;
 
 
 function setup() {
@@ -27,10 +28,26 @@ function setup() {
       currentPattern = currentPattern === 1 ? 2 : 1;
       redraw();
     });
+  
+    isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   }
 
 
- 
+  function touchStarted() {
+    if (!isMobile) return;
+    seed = Math.random() * 100000; // Generate a new random seed
+    song.play();
+    redraw();
+  }
+  function mousePressed() {
+    if (isMobile) return;
+      seed = Math.random() * 100000; // Generate a new random seed
+      if (mouseButton === LEFT) {
+          song.play();
+          redraw();
+      }
+  }
+
 
   function generateUniqueFilename() {
     const timestamp = new Date().getTime();
@@ -43,13 +60,7 @@ function changeCanvasSize(newSize) {
     redraw();
   }
   
-function mousePressed() {
-    seed = Math.random() * 100000; // Generate a new random seed
-    if (mouseButton === LEFT) {
-        song.play();
-        redraw();
-      }
-  }
+
   
 
 function draw() {
