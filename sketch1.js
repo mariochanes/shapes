@@ -2,13 +2,12 @@ let seed = 0;
 let currentPattern = 2;
 let song;
 
-function preload() {
-  
-}
+
 function setup() {
     const canvasSizeInput = select('#canvasSize');
     const initialSize = parseInt(canvasSizeInput.value(), 10);
     const canvas = createCanvas(initialSize, initialSize);
+    song = loadSound('assets/pop.mp3');
 
     canvasSizeInput.input(() => {
       const newSize = parseInt(canvasSizeInput.value(), 10);
@@ -47,12 +46,7 @@ function changeCanvasSize(newSize) {
 function mousePressed() {
     seed = Math.random() * 100000; // Generate a new random seed
     if (mouseButton === LEFT) {
-        if (song.isPlaying()) {
-          song.stop();
-          //background(255, 0, 0);
-        }else{
-          song.play();
-        }
+        song.play();
         redraw();
       }
   }
